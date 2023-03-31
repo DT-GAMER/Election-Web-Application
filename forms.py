@@ -23,5 +23,5 @@ class VoteForm(FlaskForm):
     social_secretary = RadioField('Social Secretary', choices=[('Shoneye Omolola', 'Akintunde Itunuoluwa', 'Akinyomi Sefunmi Isaiah')], validators=[DataRequired()])
     financial_secretary = RadioField('Financial Secretary' choices=[('Moghalu Chinyere')], validators=[DataRequired()])
     welfare_secretary = RadioField('Welfare Secretary' choices=[('Yusuf Aminat', 'Victoria Olomola')], validators=[DataRequired()])
-    assistant_general_secretary = RadioField('Assistance General Secretary', choices=[('Oyeyinka Sarah')], validators=[DataRequired()])
+    assistant_general_secretary = RadioField('Assistant General Secretary', choices=[('Oyeyinka Sarah')], validators=[DataRequired()])
     submit = SubmitField('vote')
