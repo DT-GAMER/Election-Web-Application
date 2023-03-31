@@ -18,11 +18,11 @@ def add_into_DB(Email, Names, Password):
                          database=DB_NAME)
     except (Exception, Error) as error:
         print("Error while connecting to PostgreSQL", error)
-    conn = psycopg2.connect(user="postgres",
-                         password="k0r0.day",
-                         host="localhost",
-                         port="5432",
-                         database="accounts")
+    conn = psycopg2.connect(user=DB_USER,
+                         password=PASSWORD,
+                         host=DB_HOST,
+                         port=DB_PORT,
+                         database=DB_NAME)                      
     c = conn.cursor()
     try:
         insert = "INSERT INTO SignUp(Email, Names, Password) VALUES (%s,%s,%s)"
@@ -51,11 +51,11 @@ def Login():
     # DBO Email Check
     try:
         Email = input("Email: ")
-        conn = psycopg2.connect(user="postgres",
-                         password="k0r0.day",
-                         host="localhost",
-                         port="5432",
-                         database="accounts")
+        conn = psycopg2.connect(user=DB_USER,
+                         password=PASSWORD,
+                         host=DB_HOST,
+                         port=DB_PORT,
+                         database=DB_NAME)
         c = conn.cursor()
         retrieve = "SELECT Email FROM SignUp WHERE Email = '{0}'".format(Email)
         c.execute(retrieve)
@@ -71,11 +71,11 @@ def Login():
     # Password
     try:
         Password = input("Password: ")
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="accounts")
+        conn = psycopg2.connect(user=DB_USER,
+                         password=PASSWORD,
+                         host=DB_HOST,
+                         port=DB_PORT,
+                         database=DB_NAME)
         c = conn.cursor()
         retrieve = "SELECT Password FROM SignUp WHERE Email = '{0}'".format(Email)
         c.execute(retrieve)
