@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 from datetime import datetime
-from models import db, User, Position, Candidate, Vote
-from forms import SignUpForm, LoginForm, VoteForm
+from forms import RegistrationForm, LoginForm, VoteForm
 from authentication import login_required, current_user, logout_user
 from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
 from flask_migrate import Migrate
@@ -11,14 +10,17 @@ from sqlalchemy.exc import IntegrityError
 from flask_cors import CORS, cross_origin
 import os
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JSON_SORT_KEYS'] = False
-db =SQLAlchemy(app)
-migrate = Migrate(app, db)
-cors = CORS(app)
+def create_app():
+    from .models import db, User, Position, Candidate, Vote
+    db.init_app(app)
+    app = Flask(__name__)
+    app.config['SECRET_KEY'] = SECRET_KEY
+    app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['JSON_SORT_KEYS'] = False
+    db =SQLAlchemy(app)
+    migrate = Migrate(app, db)
+    cors = CORS(app)
 
 @app.before_first_request
 def create_tables():
