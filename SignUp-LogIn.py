@@ -3,6 +3,7 @@ from psycopg2 import Error
 import bcrypt
 import random
 import string
+from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
 
 """Encryption Salt would be used to encrypt passwords during SignUp"""
 salt = bcrypt.gensalt()
