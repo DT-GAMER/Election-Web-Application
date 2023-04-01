@@ -2,8 +2,8 @@ from flask import Flask, Blueprint, render_template, redirect, request, flash, s
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from forms import LoginForm, VoteForm, RegistrationForm
-from models import User, Candidate, Vote
-from werkzeug.security import generate_password_hash
+from models import User, Candidate, Vote, position
+from werkzeug.security import generate_password_hash, check_password_hash
 import bcrypt
 import random
 import string
@@ -23,6 +23,8 @@ db = SQLAlchemy(app)
 from flask_cors import CORS
 CORS(app)
 
+
+
 # Define routes
 @app.route('/')
 def index():
@@ -31,14 +33,25 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+
     if form.validate_on_submit():
-        user = User.query.filter_by(voter_id=form.voter_id.data).first()
-        if user and bcrypt.checkpw(form.voter_key.data.encode(), user.voter_key.encode()):
-            session['user'] = user.id
-            session.permanent = True
-            return redirect('/dashboard')
-        else:
-            flash('Invalid Voter ID or Key', 'error')
+        voter_id = form.voter_id.data
+        voter_key = form.voter_key.data
+
+        # Check if voter exists in the database
+        voter = Voter.query.filter_by(voter_id=voter_id).first()
+        if voter:
+            # Validate voter's key
+            if check_password_hash(voter.voter_key, voter_key):
+                # Create session for the voter
+                session['logged_in'] = True
+                session['voter_id'] = voter_id
+
+                flash('You have successfully logged in.', 'success')
+                return redirect(url_for('vote'))
+ 
+        flash('Invalid voter ID or key.', 'error')
+
     return render_template('login.html', form=form)
 
 @app.route('/logout')
@@ -90,26 +103,27 @@ def vote():
             candidates[position[0]] = Candidate.query.filter_by(position=position[0]).all()
         return render_template('vote.html', positions=positions, candidates=candidates, form=form)
 
-@auth.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
-            flash('Email address already exists')
-            return redirect(url_for('auth.register'))
+            flash('This email address has already been used to register.')
+            return redirect(url_for('register'))
         else:
-            # generate a random voter id and key for the new user
-            voter_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
-            voter_key = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
-            
-            new_user = User(full_name=form.full_name.data, email=form.email.data,
-                            password=generate_password_hash(form.password.data, method='sha256'),
-                            voter_id=voter_id, voter_key=voter_key)
-            new_user.save()
-            flash('Registration successful. Please log in.')
-            return redirect(url_for('auth.login'))
+            # Generate unique voter's ID
+            voter_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+            # Generate random password for voter key
+            voter_key = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=20))
+            # Save user to database with generated voter ID and key
+            new_user = User(name=form.name.data, email=form.email.data, voter_id=voter_id, voter_key=generate_password_hash(voter_key))
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Registration successful. Your Voter ID is {} and Voter Key is {}.'.format(voter_id, voter_key))
+            return redirect(url_for('login'))
     return render_template('register.html', form=form)
+
 
 @app.route('/')
 def application_great():

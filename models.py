@@ -30,6 +30,16 @@ class Candidate(db.Model):
     def __repr__(self):
         return f"Candidate('{self.full_name}', '{self.position}', '{self.votes}')"
 
+class Vote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    voter_id = db.Column(db.String(10), nullable=False)
+    candidate_id = db.Column(db.Integer, nullable=False)
+    position_id = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return f"Vote('{self.voter_id}', '{self.candidate_id}', '{self.position_id}')"
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
