@@ -15,13 +15,13 @@ class TestModels(unittest.TestCase):
         db.session.add(self.user)
 
         # Create test positions
-        self.pos1 = Position(name='President')
-        self.pos2 = Position(name='Vice President')
+        self.pos1 = Position(name='Sport Secretary')
+        self.pos2 = Position(name='Welfare Secretary')
         db.session.add_all([self.pos1, self.pos2])
 
         # Create test candidates
-        self.cand1 = Candidate(name='John Doe', position=self.pos1)
-        self.cand2 = Candidate(name='Jane Smith', position=self.pos2)
+        self.cand1 = Candidate(name='Ayo Babalola', position=self.pos1)
+        self.cand2 = Candidate(name='Omolola Victoria', position=self.pos2)
         db.session.add_all([self.cand1, self.cand2])
 
         db.session.commit()
@@ -33,32 +33,32 @@ class TestModels(unittest.TestCase):
 
     def test_user_creation(self):
         # Test user creation
-        user = User(username='newuser', voter_id='456', voter_key='def')
+        user = User(username='newuser', voter_id='456', voter_key='xyz')
         db.session.add(user)
         db.session.commit()
 
         assert user.id is not None
         assert user.username == 'newuser'
         assert user.voter_id == '456'
-        assert user.voter_key == 'def'
+        assert user.voter_key == 'xyz'
 
     def test_position_creation(self):
         # Test position creation
-        pos = Position(name='Secretary')
+        pos = Position(name='Treasurer')
         db.session.add(pos)
         db.session.commit()
 
         assert pos.id is not None
-        assert pos.name == 'Secretary'
+        assert pos.name == 'Treasurer'
 
     def test_candidate_creation(self):
         # Test candidate creation
-        cand = Candidate(name='Bob Johnson', position=self.pos1)
+        cand = Candidate(name='Elizabeth Taiwo Fowode', position=self.pos1)
         db.session.add(cand)
         db.session.commit()
 
         assert cand.id is not None
-        assert cand.name == 'Bob Johnson'
+        assert cand.name == 'Elizabeth Taiwo Fowode'
         assert cand.position == self.pos1
 
     def test_get_user_by_voter_id(self):
@@ -75,7 +75,7 @@ class TestModels(unittest.TestCase):
         candidates = Candidate.query.filter_by(position=self.pos1).all()
 
         assert len(candidates) == 1
-        assert candidates[0].name == 'John Doe'
+        assert candidates[0].name == 'Ayo Babalola'
         assert candidates[0].position == self.pos1
 
 if __name__ == '__main__':
