@@ -1,12 +1,25 @@
 import datetime
+import time
 
-# set the start and end time for the election
-start_time = datetime.time(hour=8, minute=0, second=0)
-end_time = datetime.time(hour=12, minute=0, second=0)
+def start_election():
+    """Starts the election at 8am."""
+    start_time = datetime.time(hour=8, minute=0)
+    while True:
+        now = datetime.datetime.now().time()
+        if now >= start_time:
+            break
+        time.sleep(60)  # Check again in 1 minute
 
-def is_election_open():
-    # get the current time
-    current_time = datetime.datetime.now().time()
+    print("The election has started!")
 
-    # check if the current time is within the election window
-    return current_time >= start_time and current_time < end_time
+
+def end_election():
+    """Ends the election at 12 noon."""
+    end_time = datetime.time(hour=12, minute=0)
+    while True:
+        now = datetime.datetime.now().time()
+        if now >= end_time:
+            break
+        time.sleep(60)  # Check again in 1 minute
+
+    print("The election has ended!")
