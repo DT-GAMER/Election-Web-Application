@@ -1,40 +1,35 @@
-from enum import unique
-from app import db
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from app import db, login_manager
+from flask_login import UserMixin
 
-
-db = SQLalchemy()
-
-
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
     full_name = db.Column(db.String(120), nullable=False)
-    votes = db.relationship('Vote', backref='voter', lazy=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    voter_id = db.Column(db.String(120), unique=True, nullable=False)
+    voter_key = db.Column(db.String(120), unique=True, nullable=False)
+    voted = db.Column(db.Boolean, default=False, nullable=False)
 
     def __repr__(self):
-        return f"User('{self.full_name}', '{self.email}')"
+        return f"User('{self.full_name}', '{self.email}', '{self.voter_id}', '{self.voter_key}', '{self.voted}')"
 
+class Position(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    candidates = db.relationship('Candidate', backref='position', lazy=True)
+
+    def __repr__(self):
+        return f"Position('{self.name}')"
 
 class Candidate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    position = db.Column(db.String(120), nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    votes = db.relationship('Vote', backref='candidate', lazy=True)
+    full_name = db.Column(db.String(120), nullable=False)
+    position_id = db.Column(db.Integer, db.ForeignKey('position.id'), nullable=False)
+    votes = db.Column(db.Integer, default=0, nullable=False)
 
     def __repr__(self):
-        return f"Candidate('{self.name}', '{self.position}')"
+        return f"Candidate('{self.full_name}', '{self.position}', '{self.votes}')"
 
-
-class Vote(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    candidate_id = db.Column(db.Integer, db.ForeignKey('candidate.id'), nullable=False)
-    position = db.Column(db.String(120), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f"Vote('{self.position}', '{self.date_posted}')"   
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
