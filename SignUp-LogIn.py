@@ -14,11 +14,11 @@ the SIGNUP_TABLE on the database
 
 def add_into_DB(Email, Names):
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         c = conn.cursor()
         key = Key()
         insert = "INSERT INTO Election.SignUp(Email, Names, Key) VALUES (%s,%s,%s)"
@@ -55,11 +55,11 @@ def Login():
     key would proceed to Dashboard"""
 
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         c = conn.cursor()
         key = input("Key: ")
         retrieve = "SELECT key FROM Election.SignUp WHERE key = %s"
