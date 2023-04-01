@@ -3,11 +3,11 @@ from psycopg2 import Error
 
 def add_candidates(Names, Position):
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         cursor = conn.cursor()
         addContestants = """ INSERT INTO Election.CANDIDATES(Candidates,Pos_ID) VALUES(%s,%s)"""
         values = (Names, Position)
@@ -24,11 +24,11 @@ def add_candidates(Names, Position):
 
 def addPositions(Position ):
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         cursor = conn.cursor()
         addContestants = """ INSERT INTO Election.Positions(Position) VALUES(%s)"""
         values = (Position,)
