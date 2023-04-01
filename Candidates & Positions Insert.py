@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import Error
+from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
 
 def add_candidates(Names, Position):
     try:
