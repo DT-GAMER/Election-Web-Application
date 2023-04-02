@@ -1,129 +1,135 @@
-from flask import Flask, Blueprint, render_template, redirect, request, flash, session
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from datetime import datetime
-from forms import LoginForm, VoteForm, RegistrationForm
-from models import User, Candidate, Vote, position
-from werkzeug.security import generate_password_hash, check_password_hash
-import bcrypt
-import random
-import string
-
-auth = Blueprint('auth', __name__)
+from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
+from api.register import register_user
+from api.login import login_user
+from api.vote import vote_candidate
+from api.dashboard import get_results
+import psycopg2
+import uuid
+import smtplib
+import ssl
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_TYPE'] = 'filesystem'
-
-db = SQLAlchemy(app)
-
-# CORS setup
-from flask_cors import CORS
 CORS(app)
 
+# Database connection
+def connect():
+    conn = psycopg2.connect(
+        database=DB_NAME,
+        user=DB_USER,
+        password=DB_PASSWORD,
+        host=DB_HOST,
+        port=DB_PORT
+    )
+    return conn
 
+# Register endpoint
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        conn = connect()
+        cur = conn.cursor()
+        data = request.get_json()
+        email = data['email']
+        full_name = data['full_name']
+        key = str(uuid.uuid4())[:24] # Generate unique 24-char key
+        now = datetime.now()
+        create_date = now.strftime("%Y-%m-%d %H:%M:%S")
+        sql = """INSERT INTO users (email, full_name, login_key, create_date) VALUES (%s, %s, %s, %s)"""
+        cur.execute(sql, (email, full_name, key, create_date))
+        conn.commit()
+        conn.close()
 
-# Define routes
-@app.route('/')
-def index():
-    return render_template('index.html')
+        # Send key to user's email
+        sender_email = "theelectoralcollege24@gmail.com"
+        sender_password = "electoralcollege2023"
+        receiver_email = email
+        message = f"""\
+        Subject: Your Election Login Key
+        
+        Your login key for the election is: {key}
+        
+        You can use this key to login at any time between 8am and 12 noon on the day of the election.
+        
+        Thank you for participating in the election."""
 
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, receiver_email, message)
+
+        return jsonify({'message': 'Registration successful. Login key has been sent to your email.'})
+    else:
+        return jsonify({'message': 'Invalid request method.'}), 405
+
+# Login endpoint
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    if request.method == 'POST':
+        conn = connect()
+        cur = conn.cursor()
+        data = request.get_json()
+        login_key = data['login_key']
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        if current_time < "08:00:00" or current_time > "12:00:00":
+            return jsonify({'message': 'Voting is only allowed between 8am and 12 noon on the day of the election.'}), 403
+        cur.execute("SELECT * FROM users WHERE login_key=%s", (login_key,))
+        user = cur.fetchone()
+        conn.close()
+        if user:
+            return jsonify({'message': 'Login successful.'})
+        else:
+            return jsonify({'message': 'Invalid login key.'}), 401
+    else:
+        return jsonify({'message': 'Invalid request method.'}), 405
 
-    if form.validate_on_submit():
-        voter_id = form.voter_id.data
-        voter_key = form.voter_key.data
-
-        # Check if voter exists in the database
-        voter = Voter.query.filter_by(voter_id=voter_id).first()
-        if voter:
-            # Validate voter's key
-            if check_password_hash(voter.voter_key, voter_key):
-                # Create session for the voter
-                session['logged_in'] = True
-                session['voter_id'] = voter_id
-
-                flash('You have successfully logged in.', 'success')
-                return redirect(url_for('vote'))
  
-        flash('Invalid voter ID or key.', 'error')
 
-    return render_template('login.html', form=form)
+# Vote endpoint
+@app.route('/vote', methods=['POST'])
+def vote():
+    # get the user's vote choice from the request body
+    data = request.get_json()
+    vote_choice = data['vote_choice']
 
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect('/')
+    # get the user's token from the request headers
+    token = request.headers.get('Authorization')
+
+    # check if the token exists in the database
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE login_key=%s", (token,))
+    user = cur.fetchone()
+    conn.close()
+
+    if user is None:
+        return jsonify({'message': 'Invalid token'}), 401
+
+    # check if the user has already voted
+    if user[4] is not None:
+        return jsonify({'message': 'User has already voted'}), 400
+
+    # record the user's vote in the database
+    conn = connect()
+    cur = conn.cursor()
+    now = datetime.now()
+    vote_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    sql = """INSERT INTO votes (user_id, candidate_id, vote_time) VALUES (%s, %s, %s)"""
+    cur.execute(sql, (user[0], vote_choice, vote_time))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'message': 'Vote successful'})
+
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' not in session:
-        return redirect('/login')
-    user = User.query.get(session['user'])
-    if not user:
-        return redirect('/login')
-    if not user.has_voted:
-        positions = Candidate.query.with_entities(Candidate.position).distinct().all()
-        return render_template('vote.html', positions=positions)
-    else:
-        votes = Vote.query.filter_by(user_id=user.id).all()
-        return render_template('results.html', votes=votes)
-
-@app.route('/vote', methods=['GET', 'POST'])
-def vote():
-    if 'user' not in session:
-        return redirect('/login')
-    user = User.query.get(session['user'])
-    if not user:
-        return redirect('/login')
-    if user.has_voted:
-        flash('You have already voted', 'error')
-        return redirect('/dashboard')
-    form = VoteForm()
-    if form.validate_on_submit():
-        for position, candidate_id in form.data.items():
-            if position.startswith('position_'):
-                position_name = position.split('position_')[1]
-                candidate = Candidate.query.filter_by(id=candidate_id).first()
-                if candidate:
-                    vote = Vote(user_id=user.id, position=position_name, candidate_id=candidate_id)
-                    db.session.add(vote)
-        user.has_voted = True
-        db.session.commit()
-        flash('Vote casted successfully!', 'success')
-        return redirect('/dashboard')
-    else:
-        positions = Candidate.query.with_entities(Candidate.position).distinct().all()
-        candidates = {}
-        for position in positions:
-            candidates[position[0]] = Candidate.query.filter_by(position=position[0]).all()
-        return render_template('vote.html', positions=positions, candidates=candidates, form=form)
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user:
-            flash('This email address has already been used to register.')
-            return redirect(url_for('register'))
-        else:
-            # Generate unique voter's ID
-            voter_id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
-            # Generate random password for voter key
-            voter_key = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=20))
-            # Save user to database with generated voter ID and key
-            new_user = User(name=form.name.data, email=form.email.data, voter_id=voter_id, voter_key=generate_password_hash(voter_key))
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Registration successful. Your Voter ID is {} and Voter Key is {}.'.format(voter_id, voter_key))
-            return redirect(url_for('login'))
-    return render_template('register.html', form=form)
-
+    result = get_results()
+    return jsonify(result)
 
 @app.route('/')
 def application_great():
@@ -131,3 +137,4 @@ def application_great():
 
 if __name__ == 'main':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+
