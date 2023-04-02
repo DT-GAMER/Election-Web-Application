@@ -22,6 +22,4 @@ DT-GAMER: abakpad82@gmail.com
 Papabeer01: korosky11@gmail.com
 
 # Licence
-This project is licensed under the MIT License. See the [click me](LICENSE)
-
- file for more information.
+This project is licensed under the MIT License. See the [click me](LICENSE) file for more information.
