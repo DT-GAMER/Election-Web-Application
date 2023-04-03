@@ -66,4 +66,5 @@ add_candidates("YUSUF AMINAT OPEYEMI", 4)
 add_candidates("OYEYINKA OLUWAPELUMI SARAH", 2)
 add_candidates("AKINYOMI SEFUNMI ISAIAH", 3)
 add_candidates("BABALOLA AYOOLA SAMUEL", 6)
+add_candidates("FOWODE ELIZABETH TAIWO", 7)
 
