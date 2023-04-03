@@ -121,13 +121,16 @@ def resultCounts():
             Sport INT NOT NULL,
             Welfare INT NOT NULL,
             Social INT NOT NULL,
+            Treasurer INT NOT NULL,
             CONSTRAINT fk_voters_id FOREIGN KEY (Voters_ID) REFERENCES ELECTION.SignUp(ID),
             CONSTRAINT fk_sport_pos_id FOREIGN KEY (Sport) REFERENCES ELECTION.Candidates(id),
             CONSTRAINT fk_welfare_pos_id FOREIGN KEY (Welfare) REFERENCES ELECTION.Candidates(id),
             CONSTRAINT fk_social_cand_id FOREIGN KEY (Social) REFERENCES ELECTION.Candidates(id),
+            CONSTRAINT fk_treasurer_cand_id FOREIGN KEY (Treasurer) REFERENCES ELECTION.Candidates(id),
             CONSTRAINT chk_sport_id CHECK (Sport IN (5,7,11)),
             CONSTRAINT chk_welfare_id CHECK (Welfare IN(6,8)),
-            CONSTRAINT chk_social_id CHECK (Social IN (1,2,10))
+            CONSTRAINT chk_social_id CHECK (Social IN (1,2,10)),
+            CONSTRAINT chk_treasurer_id CHECK (Treasurer IN (12,13))
         );"""
         cursor.execute(createTable)
         conn.commit()
