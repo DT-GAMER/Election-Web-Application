@@ -4,7 +4,7 @@ import string
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from config import DB_HOST, DB_NAME, DB_PORT, DB_PASSWORD, DB_USER
+from config import DB_HOST, DB_NAME, DB_PORT, DB_PASSWORD, DB_USER, SMTP_SERVER, SMTP_PORT
 
 # Postgresql connection parameters
 HOST = DB_HOST
@@ -14,10 +14,10 @@ PASSWORD = DB_PASSWORD
 PORT = DB_PORT
 
 # SMTP email server parameters
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
-EMAIL_ADDRESS = "your_email_address@gmail.com"
-EMAIL_PASSWORD = "your_email_password"
+S_SERVER = SMTP_SERVER
+S_PORT = SMTP_PORT
+EMAIL_ADDRESS = "theelectoralcollege24@gmail.com"
+EMAIL_PASSWORD = "electoralcollege2023"
 
 
 def generate_key(length=24):
