@@ -4,12 +4,14 @@ import string
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from config import DB_HOST, DB_NAME, DB_PORT, DB_PASSWORD, DB_USER
 
 # Postgresql connection parameters
-HOST = "localhost"
-DATABASE = "election_db"
-USER = "postgres"
-PASSWORD = "password"
+HOST = DB_HOST
+DATABASE = DB_NAME
+USER = DB_USER
+PASSWORD = DB_PASSWORD
+PORT = DB_PORT
 
 # SMTP email server parameters
 SMTP_SERVER = "smtp.gmail.com"
