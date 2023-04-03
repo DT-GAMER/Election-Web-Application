@@ -1,6 +1,6 @@
 import os
 
-class Config:
+class config:
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
@@ -12,6 +12,10 @@ class Config:
         DB_NAME=os.environ.get('electiondb')
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+class smpt:
+    SMTP_SERVER = "smtp.gmail.com"
+    SMTP_PORT = 587
 
 class ProductionConfig(Config):
     DEBUG = False
