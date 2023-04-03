@@ -67,5 +67,5 @@ add_candidates("OYEYINKA OLUWAPELUMI SARAH", 2)
 add_candidates("AKINYOMI SEFUNMI ISAIAH", 3)
 add_candidates("BABALOLA AYOOLA SAMUEL", 6)
 add_candidates("FOWODE ELIZABETH TAIWO", 7)
-add_candidates("OGUNSANYA GAFAR AYOMIDE", 7)
+add_candidates("OGUNSANYA GAFARU AYOMIDE", 7)
 
