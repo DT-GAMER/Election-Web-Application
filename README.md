@@ -20,6 +20,7 @@ Contributions are welcome! If you find any bugs or issues, please open an issue 
 # Authors
 DT-GAMER: abakpad82@gmail.com
 Papabeer01: korosky11@gmail.com
+GbemilekeAyo: onabajogbemileke37@gmail.com
 
 # Licence
 This project is licensed under the MIT License. See the [click me](LICENSE) file for more information.
