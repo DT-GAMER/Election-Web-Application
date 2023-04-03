@@ -1,6 +1,11 @@
 import psycopg2
-
-conn = psycopg2.connect(database="election", user="postgres", password="password", host="127.0.0.1", port="5432")
+from psycopg2 import Error
+from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
+conn = psycopg2.connect(user=DB_USER,
+                        password=DB_PASSWORD,
+                        host=DB_HOST,
+                        port=DB_PORT,
+                        database=DB_NAME)
 print("Database connected successfully")
 
 def login(key):
