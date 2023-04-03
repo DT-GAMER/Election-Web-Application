@@ -1,17 +1,17 @@
 from flask import Flask, render_template, redirect, url_for
 from psycopg2 import connect
-from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
+from config import USERNAME, PASSWORD, DATABASE_HOST, DATABASE_PORT, DATABASE_NAME
 
 app = Flask(__name__)
 
 # Database connection
 def connect():
     conn = psycopg2.connect(
-        database=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT
+        user=USERNAME,
+        password=PASSWORD,
+        host=DATABASE_HOST,
+        port=DATABASE_PORT,
+        database=DATABASE_NAME)
     )
     return conn
 
