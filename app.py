@@ -12,8 +12,8 @@ import smtplib
 import ssl
 import os
 
-app = Flask(__name__)
-CORS(app)
+start_app = Flask(__name__)
+CORS(start_app)
 
 # Database connection
 def connect():
