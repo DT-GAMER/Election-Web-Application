@@ -19,8 +19,8 @@ def connect():
 def get_election_results():
     with conn.cursor() as cur:
         # Get the total number of votes cast
-        cur.execute("SELECT COUNT(*) FROM votes")
-        total_votes = cur.fetchone()[0]
+        cur.execute("SELECT SUM(sport) AS sum_sport, SUM(welfare) AS sum_welfare, SUM(social) AS sum_social, SUM(treasurer) AS sum_treasurer FROM election.results;")
+        total_votes = cur.fetchall()[0]
         
         # Get the number of votes for each candidate
         cur.execute("SELECT candidate, COUNT(*) FROM votes GROUP BY candidate")
