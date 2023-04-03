@@ -27,8 +27,8 @@ def vote(candidate_id, voter_id):
             
             # Insert the vote into the database
             voted_at = datetime.now()
-            cur.execute("INSERT INTO election.results (voters_id, sport, welfare, social) VALUES (%s, %s, %s, %s)", 
-                        (voter_id, sport, welfare, social))
+            cur.execute("INSERT INTO election.results (voters_id, sport, welfare, social, treasurer) VALUES (%s, %s, %s, %s, %s)", 
+                        (voter_id, sport, welfare, social, treasurer))
             
             # Commit the transaction
             conn.commit()
