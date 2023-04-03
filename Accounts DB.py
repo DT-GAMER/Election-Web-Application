@@ -9,11 +9,11 @@ as well as log in details.
 # Function to create Schema using PostGreSQL
 def Schema():
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         # Creating cursor to perform DB Opertions
         cursor = conn.cursor()
         # SQL query to create a table
@@ -32,11 +32,11 @@ def Schema():
 # Function to create Database & Table using PostGreSQL
 def accountTable():
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         # Creating cursor to perform DB Opertions
         cursor = conn.cursor()
         # SQL query to create a table
@@ -63,11 +63,11 @@ each voters votes."""
 
 def Positions():
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         cursor = conn.cursor()
         createTable = """ CREATE TABLE ELECTION.Positions
                 (ID SERIAL PRIMARY KEY,
@@ -86,11 +86,11 @@ def Positions():
 # Function to create Database & Table using PostGreSQL
 def candidates():
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         cursor = conn.cursor()
         createTable = """CREATE TABLE ELECTION.CANDIDATES
         (ID SERIAL PRIMARY KEY, Candidates TEXT NOT NULL, 
@@ -109,11 +109,11 @@ def candidates():
 
 def resultCounts():
     try:
-        conn = psycopg2.connect(user="postgres",
-                                password="k0r0.day",
-                                host="localhost",
-                                port="5432",
-                                database="electiondb")
+        conn = psycopg2.connect(user=DB_USER,
+                                password=DB_PASSWORD,
+                                host=DB_HOST,
+                                port=DB_PORT,
+                                database=DB_NAME)
         cursor = conn.cursor()
         createTable = """CREATE TABLE ELECTION.RESULTS (
             Id SERIAL PRIMARY KEY,
