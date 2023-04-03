@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
-from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
+from config import USERNAME, PASSWORD, DATEBASE_HOST, DATEBASE_PORT, DATEBASE_NAME
 from api.register import register_user
 from api.login import login_user
 from api.vote import vote_candidate
@@ -18,12 +18,11 @@ CORS(start_app)
 # Database connection
 def connect():
     conn = psycopg2.connect(
-        database=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT
-    )
+        user=USERNAME,
+        password=PASSWORD,
+        host=DATABASE_HOST,
+        port=DATABASE_PORT,
+        database=DATABASE_NAME)
     return conn
 
 # Register endpoint
