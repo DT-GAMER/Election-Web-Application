@@ -1,11 +1,11 @@
 import psycopg2
 from psycopg2 import Error
-from config import DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME
-conn = psycopg2.connect(user=DB_USER,
-                        password=DB_PASSWORD,
-                        host=DB_HOST,
-                        port=DB_PORT,
-                        database=DB_NAME)
+from config import USERNAME, PASSWORD, DATABASE_HOST, DATABASE_PORT, DATABASE_NAME
+conn = psycopg2.connect(user=USERNAME,
+                        password=PASSWORD,
+                        host=DATABASE_HOST,
+                        port=DATABASE_PORT,
+                        database=DATABASE_NAME)
 print("Database connected successfully")
 
 def login(key):
