@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from datetime import datetime
-from config import USERNAME, PASSWORD, DATEBASE_HOST, DATEBASE_PORT, DATEBASE_NAME
+from config import Config
 from api.register import register_user
 from api.login import login_user
 from api.vote import vote_candidate
@@ -10,9 +10,9 @@ import psycopg2
 import uuid
 import smtplib
 import ssl
-import os
 
 app = Flask(__name__)
+app.config.from_object(Config())
 CORS(app)
 
 # Database connection
