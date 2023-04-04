@@ -1,14 +1,10 @@
 import psycopg2
 from psycopg2 import Error
-from config import USERNAME, PASSWORD, DATABASE_HOST, DATABASE_PORT, DATABASE_NAME
+from config import Config
 
 def add_candidates(Names, Position):
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         cursor = conn.cursor()
         addContestants = """ INSERT INTO Election.CANDIDATES(Candidates,Pos_ID) VALUES(%s,%s)"""
         values = (Names, Position)
@@ -25,11 +21,7 @@ def add_candidates(Names, Position):
 
 def addPositions(Position ):
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         cursor = conn.cursor()
         addContestants = """ INSERT INTO Election.Positions(Position) VALUES(%s)"""
         values = (Position,)
