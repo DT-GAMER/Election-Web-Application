@@ -1,5 +1,5 @@
 from flask import Flask
-from api import login, register, vote, dashboard
+from api import login, register, vote
 
 app = Flask(__name__)
 
