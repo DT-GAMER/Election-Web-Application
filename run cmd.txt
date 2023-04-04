@@ -1,1 +1,1 @@
-gunicorn --bind=0.0.0.0:5000 --thread=4 app:app
+gunicorn --bind=0.0.0.0:$PORT --thread=4 app:app
