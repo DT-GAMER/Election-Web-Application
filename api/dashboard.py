@@ -1,18 +1,12 @@
 from flask import Flask, render_template, redirect, url_for
 from psycopg2 import connect
-from config import USERNAME, PASSWORD, DATABASE_HOST, DATABASE_PORT, DATABASE_NAME
+from config import Config
 
 app = Flask(__name__)
 
 # Database connection
 def connect():
-    conn = psycopg2.connect(
-        user=USERNAME,
-        password=PASSWORD,
-        host=DATABASE_HOST,
-        port=DATABASE_PORT,
-        database=DATABASE_NAME)
-    )
+    conn = psycopg2.connect(config.CONNECTION_STRING)
     return conn
 
 # Define a function to get the election results from the database
