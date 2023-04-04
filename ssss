@@ -1,0 +1,389 @@
+[33mcommit 47386e680d7ebf6332f1d58ca601ea795b5538d0[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: DT-GAMER <abakpad82@gmail.com>
+Date:   Mon Apr 3 22:43:38 2023 -0700
+
+    update file
+
+[33mcommit da37279a31406f5661af63a989547d25b4e2aab7[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 22:42:38 2023 -0700
+
+    Update app.py
+
+[33mcommit bf67c2b9746d95e82f39fb03ce0d904ff585116e[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 22:41:40 2023 -0700
+
+    Create run cmd.txt
+
+[33mcommit bbc3edb7c4ad060f9806fecd10746ad0b6335f18[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 21:52:39 2023 -0700
+
+    Update app.py
+
+[33mcommit 1cd80ef94360ff22b5eb2a47bec661773e76386a[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 15:19:27 2023 -0700
+
+    Update vote.py
+
+[33mcommit f2b9f4efeb8a714652939459958f9cf823944306[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 15:16:27 2023 -0700
+
+    Update register.py
+
+[33mcommit c86b49805821777299ab9cde7b360791a73fac0f[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 15:12:51 2023 -0700
+
+    Update login.py
+
+[33mcommit 2978c142ccf190a2aa585a88c2e9284561f18423[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 15:10:14 2023 -0700
+
+    Update dashboard.py
+
+[33mcommit e7743e6f7128bdee76e08f16d934efe0e0a38fc0[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 15:07:24 2023 -0700
+
+    Update auth.py
+
+[33mcommit ae53a39971528afdf34508692825995cbd99fa7e[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 15:02:18 2023 -0700
+
+    Update auth_db.py
+
+[33mcommit 68b63bd5be1869c1461efa55ef59cb3037dd21b4[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 14:58:29 2023 -0700
+
+    Update app.py
+
+[33mcommit 77bb1f5796aff5de452cfcad7fc1a123a3b4e1b6[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 14:51:25 2023 -0700
+
+    Update add_data_to_database.py
+
+[33mcommit 2204efe762c09199cef24ef6bebd1e51dd90136f[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 14:48:51 2023 -0700
+
+    Update Accounts DB.py
+
+[33mcommit f4f3089835997a5f11cd8d64dc813e4f7fda9785[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 14:43:27 2023 -0700
+
+    Update config.py
+
+[33mcommit 519f4d3beff129928011907baaf7ae0e1b97d7d4[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 19:31:58 2023 +0100
+
+    Update requirements.txt
+
+[33mcommit c2075d59d2dd9801d44d14ff8bd03a06dc143d4b[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 19:22:19 2023 +0100
+
+    Update app.py
+
+[33mcommit ecf83cf7885d3cb871fa0b3cbfb9acf1654b4e88[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 18:39:37 2023 +0100
+
+    Update requirements.txt
+
+[33mcommit 10d2daa4d80e145ee2e7dbd783cd2f48b9cd6591[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 18:02:58 2023 +0100
+
+    Update dashboard.py
+
+[33mcommit eea3f51e8600809fd35b2e0376797976e0398bfa[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:57:51 2023 +0100
+
+    Update vote.py
+
+[33mcommit c310e42f00612b51d28b82442de94eea3f3d9974[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:55:34 2023 +0100
+
+    Update add_data_to_database.py
+
+[33mcommit f7eca38ea3701a152f57f6fe331ee0f10cca7363[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:54:04 2023 +0100
+
+    Update Accounts DB.py
+
+[33mcommit 519262574ba22c4831582564733b243045598c7c[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:50:33 2023 +0100
+
+    Update add_data_to_database.py
+
+[33mcommit 3cc4380a87d4aab551e02b86900470325ee91aaa[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:44:43 2023 +0100
+
+    Update vote.py
+
+[33mcommit 818c93bbf7622b7a5a82a762fd141a2b1174b157[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:17:15 2023 +0100
+
+    Update register.py
+
+[33mcommit 7e17e51ea2d389bf90706e55473018d6c3f46cd2[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:10:12 2023 +0100
+
+    Update config.py
+
+[33mcommit 2f75556489bc3337aad5c8a9269876105303c597[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 16:03:50 2023 +0100
+
+    Update register.py
+
+[33mcommit 8ebf6dec5a62714aad6359eef8ab77d704093248[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 15:59:12 2023 +0100
+
+    Update login.py
+
+[33mcommit 82f80ae2ec3b0c7fcb830524dc1a1d8cc856b20a[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 15:53:10 2023 +0100
+
+    Update Accounts DB.py
+
+[33mcommit 5b6d5635930c5070110f4ddd43faf366ca643080[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 15:49:53 2023 +0100
+
+    Update Accounts DB.py
+
+[33mcommit 5371cdcffd3938ae9322543713a0b9d60e0d3aa8[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 15:47:31 2023 +0100
+
+    Add files via upload
+
+[33mcommit 316de29c1dd18ad790a15b7ec320677268d076bf[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Mon Apr 3 15:43:08 2023 +0100
+
+    Update auth_db.py
+
+[33mcommit 6fedc10e3d2947b78112078478a843cbeaf54134[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 11:31:59 2023 +0100
+
+    Update dashboard.py
+
+[33mcommit fae2a2462ffd0df94410629b5660404e2ee378c8[m
+Author: Gbemileke Ayodele <105323737+GbemilekeAyo@users.noreply.github.com>
+Date:   Mon Apr 3 10:40:19 2023 +0100
+
+    Update README.md
+
+[33mcommit a5478db93e3f8a1e4dbe0bc91073bbf6f980d888[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Mon Apr 3 09:44:53 2023 +0100
+
+    Update add_data_to_database.py
+
+[33mcommit aaed83ebf5932f718189c98478ad0a8c8ef15da7[m
+Author: DT-GAMER <abakpad82@gmail.com>
+Date:   Sun Apr 2 14:06:38 2023 +0100
+
+    update files
+
+[33mcommit fcb6f14a6f92b6aabca9f03e411b2d4effc070d2[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sun Apr 2 13:37:00 2023 +0100
+
+    Update README.md
+
+[33mcommit 8925ce903ca7044a7edced356afcd0823d3274f8[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sun Apr 2 13:36:17 2023 +0100
+
+    Update README.md
+
+[33mcommit b11b40f377ee5e32e736766b102f62b4894f5365[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Sat Apr 1 22:46:43 2023 +0100
+
+    Create SignUp-LogIn.py
+
+[33mcommit fa86bc78c1bf7c4099e01ea2b2ccc41c738da8df[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Sat Apr 1 22:41:50 2023 +0100
+
+    Update Candidates & Positions Insert.py
+
+[33mcommit 0f50d4ad4837f01ac36bf405e9c0d2ac49e26102[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Sat Apr 1 22:33:02 2023 +0100
+
+    Update SignUp-LogIn.py
+
+[33mcommit 56bea38d58820328c4338692565f0dd08a6abc5e[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Sat Apr 1 22:29:21 2023 +0100
+
+    Update Candidates & Positions Insert.py
+
+[33mcommit f8f0a19eb4530cff9eaec9dfdcc64c3d3dac7fba[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Sat Apr 1 22:27:47 2023 +0100
+
+    Add files via upload
+
+[33mcommit 251be4dcbfb9ce28dca738fff54007e5780c117a[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Sat Apr 1 22:15:48 2023 +0100
+
+    Update account_db.py
+
+[33mcommit c58900d9a6437cd6c1087c70de85a39c236ebddc[m
+Author: DT-GAMER <abakpad82@gmail.com>
+Date:   Sat Apr 1 20:58:23 2023 +0100
+
+    update files
+
+[33mcommit 5828f6cd6f44a0f50ac6e15b5c00b76d4d77f082[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 18:54:33 2023 +0100
+
+    Update app.py
+
+[33mcommit dfd7df10f6331ede59638ad8dbf3c6ecf19b9aa4[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 13:54:30 2023 +0100
+
+    Update models.py
+
+[33mcommit a4c0f8bc0d9d5640b611a335e2c2421c7caaec3f[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 13:51:43 2023 +0100
+
+    Update forms.py
+
+[33mcommit 94be835ac7a55f4b5994391d0e0d65d0a234475b[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 13:46:21 2023 +0100
+
+    Create dashboard.py
+
+[33mcommit 7852e3d9ee9b4259b4bc3337e5591f617a328b3e[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 13:41:17 2023 +0100
+
+    Create vote.py
+
+[33mcommit 18588fb3a609b9029c9c399644f9d85b32ba2356[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 13:08:54 2023 +0100
+
+    Update test_files.py
+
+[33mcommit a37246320745b717a38062fe6744cc535c777cb7[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 12:58:37 2023 +0100
+
+    Create test_files.py
+
+[33mcommit 1d40c6f2d29596e2cdfcb6d9da028832785ee2d6[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 12:27:38 2023 +0100
+
+    Update result.py
+
+[33mcommit 690f9987cbead18e453d5639890942efe79039ad[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Sat Apr 1 12:15:53 2023 +0100
+
+    Update time.py
+
+[33mcommit 03bc0a1ba5e3ab9b0fdf8f051d92d838bc44b2cf[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Fri Mar 31 02:26:32 2023 -0700
+
+    Delete Accounts DB.py
+
+[33mcommit 2cb48d787ae639144f99f4e571af4b5916e74cf3[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Fri Mar 31 02:25:08 2023 -0700
+
+    Delete SignUp-LogIn.py
+
+[33mcommit 0157958349d548c73af8c8234828005aa2508e54[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Fri Mar 31 02:22:56 2023 -0700
+
+    Update authentication.py
+
+[33mcommit 8ae8422b837ed6dd9c2fc4c028c95b24e2ffe2d7[m
+Author: DT-GAMER <abakpad82@gmail.com>
+Date:   Fri Mar 31 01:59:24 2023 -0700
+
+    updated files
+
+[33mcommit 60c0daf0593d8f2091106c69d097ff0e0ff3d577[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Thu Mar 30 22:05:39 2023 -0700
+
+    Create app.py
+
+[33mcommit 9f9bae65d525197fdfe63b8ba1fdc93074381691[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Fri Mar 31 03:15:56 2023 +0100
+
+    Update forms.py
+
+[33mcommit 5f9725e0bb0329a63426377776e29ee2469347c3[m
+Author: DT-GAMER <abakpad82@gmail.com>
+Date:   Thu Mar 30 18:31:40 2023 -0700
+
+    Registration, login, vote form
+
+[33mcommit 8131367dd2ffa7bec354fc5b6d219b1be1c7689b[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Fri Mar 31 00:52:52 2023 +0100
+
+    Add files via upload
+
+[33mcommit a7c128d4b3852ab7069fddf5bad138d63dc03ea0[m
+Author: Korode Ademoroti <122447344+PapaBeer01@users.noreply.github.com>
+Date:   Fri Mar 31 00:22:36 2023 +0100
+
+    Add files via upload
+
+[33mcommit 530d27ecb406e07b82c5e5dbb94daf5ead2ba81b[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Thu Mar 30 20:24:47 2023 +0100
+
+    Create time.py
+
+[33mcommit 34f06a481f3e5fb51fe9fe94974f0d56d87de959[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Thu Mar 30 20:21:52 2023 +0100
+
+    Create result.py
+
+[33mcommit cd3fdbabcf7223645fc23081bef2cfc5006167c8[m
+Author: Abakpa Dominic <abakpad82@gmail.com>
+Date:   Thu Mar 30 18:45:51 2023 +0100
+
+    Initial commit
