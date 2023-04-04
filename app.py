@@ -12,8 +12,8 @@ import smtplib
 import ssl
 import os
 
-start_app = Flask(__name__)
-CORS(start_app)
+app = Flask(__name__)
+CORS(app)
 
 # Database connection
 def connect():
@@ -135,5 +135,5 @@ def application_great():
     return 'This application is great!'
 
 if __name__ == 'main':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5432)))
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
