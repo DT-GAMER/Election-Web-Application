@@ -12,7 +12,7 @@ from config import Config
 SMTP_SERVER = Config.Smpt.SMTP_SERVER
 SMTP_PORT = Config.Smpt.SMTP_PORT
 EMAIL_ADDRESS = "theelectoralcollege24@gmail.com"
-EMAIL_PASSWORD = "electoralcollege2023
+EMAIL_PASSWORD = "electoralcollege2023"
 
 
 def generate_key(length=24):
