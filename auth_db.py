@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2 import Error
 import random
 import string
-from config import USERNAME, PASSWORD, DATEBASE_HOST, DATEBASE_PORT, DATEBASE_NAME
+from config import Config
 
 
 """This function enables user defined data to be passed into.
@@ -12,11 +12,7 @@ the SIGNUP_TABLE on the database
 
 def add_into_DB(Email, Names):
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         c = conn.cursor()
         key = Key()
         insert = "INSERT INTO Election.SignUp(Email, Names, Key) VALUES (%s,%s,%s)"
@@ -55,11 +51,7 @@ def Login():
     key would proceed to dashboard"""
 
      try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         c = conn.cursor()
         key = input("Key: ")
         retrieve = "SELECT key FROM Election.SignUp WHERE key = %s"
