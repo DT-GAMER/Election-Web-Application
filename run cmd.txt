@@ -1,1 +1,1 @@
-gunicorn app:app & python3 -m main
+gunicorn --bind=0.0.0.0:5000 --thread=4 app:app
