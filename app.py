@@ -129,7 +129,7 @@ def dashboard():
     result = get_results()
     return jsonify(result)
 
-@app.route('/')
+@app.route('/application_great')
 def application_great():
     return 'This application is great!'
 
