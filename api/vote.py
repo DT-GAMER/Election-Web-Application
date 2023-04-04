@@ -1,19 +1,13 @@
 import psycopg2
 from datetime import datetime
-from config import USERNAME, PASSWORD, DATABASE_HOST, DATEBASE_PORT, DATEBASE_NAME
+from config import Config
 
-# Database connection parameters
-user=USERNAME,
-password=PASSWORD,
-host=DATABASE_HOST,
-port=DATABASE_PORT,
-database=DATABASE_NAME)
 
 def vote(candidate_id, voter_id):
     """Cast a vote for the specified candidate by the given voter."""
     
     # Connect to the database
-    conn = psycopg2.connect(USERNAME, PASSWORD, DATABASE_HOST, DATEBASE_PORT, DATEBASE_NAME )
+    conn = psycopg2.connect(config.CONNECTION_STRING)
     
     try:
         # Begin a transaction
