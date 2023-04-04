@@ -17,12 +17,7 @@ CORS(app)
 
 # Database connection
 def connect():
-    conn = psycopg2.connect(
-        user=USERNAME,
-        password=PASSWORD,
-        host=DATABASE_HOST,
-        port=DATABASE_PORT,
-        database=DATABASE_NAME)
+    conn = psycopg2.connect(config.CONNECTION_STRING)
     return conn
 
 # Register endpoint
