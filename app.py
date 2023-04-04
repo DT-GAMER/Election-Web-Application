@@ -140,6 +140,6 @@ def add_names():
     full_name = first_name + " " + last_name
     return full_name
 
-if __name__ == 'main':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
