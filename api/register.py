@@ -4,14 +4,9 @@ import string
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from config import DATABASE_HOST, DATABASE_NAME, DATABASE_PORT, PASSWORD, USERNAME, SMTP_SERVER, SMTP_PORT
+from config import Config
 
-# Postgresql connection parameters
-user=USERNAME,
-password=PASSWORD,
-host=DATABASE_HOST,
-port=DATABASE_PORT,
-database=DATABASE_NAME)
+
 
 # SMTP email server parameters
 S_SERVER = SMTP_SERVER
@@ -47,11 +42,7 @@ def register_user(full_name, email):
 
     try:
         # Connect to the database
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         cur = conn.cursor()
 
         # Insert the new user into the database
