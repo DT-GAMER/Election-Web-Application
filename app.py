@@ -131,6 +131,10 @@ def dashboard():
     return jsonify(result)
 
 @app.route('/')
+def hello():
+    return 'Hello, World!'
+
+@app.route('/')
 def application_great():
     return 'This application is great!'
 
