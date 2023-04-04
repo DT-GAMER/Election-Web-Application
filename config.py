@@ -1,6 +1,10 @@
 import os
 
 class Config:
+    class Smpt:
+        SMTP_SERVER = "smtp.gmail.com"
+        SMTP_PORT = 587
+    
     def __init__(self):
         self.DEBUG = False
         self.TESTING = False
@@ -12,22 +16,18 @@ class Config:
             port=os.environ.get('DB_PORT'),
             database=os.environ.get('DB_NAME')
         )
-    
-class smpt:
-    SMTP_SERVER = "smtp.gmail.com"
-    SMTP_PORT = 587
+        self.SMTP = Config.Smpt()
 
-class ProductionConfig(config):
-    iiCONNECTION_STRING = 'postgres://electapp-main-db-0fa618ed4ebf577c7:tucb65V2BzwXGwjEBv28ME3HqcAak2@user-prod-us-east-2-1.cluster-cfi5vnucvv3w.us-east-2.rds.amazonaws.com:5432/electapp-main-db-0fa618ed4ebf577c7'
+class ProductionConfig(Config):
     DEBUG = False
 
-class StagingConfig(config):
+class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
 
-class DevelopmentConfig(config):
+class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
 
-class TestingConfig(config):
+class TestingConfig(Config):
     TESTING = True
