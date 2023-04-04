@@ -133,6 +133,13 @@ def dashboard():
 def application_great():
     return 'This application is great!'
 
+@app.route('/add_names')
+def add_names():
+    first_name = request.args.get('first_name')
+    last_name = request.args.get('last_name')
+    full_name = first_name + " " + last_name
+    return full_name
+
 if __name__ == 'main':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
 
