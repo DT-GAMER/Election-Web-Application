@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from config import USERNAME, PASSWORD, DATABASE_HOST, DATABASE_PORT, DATABASE_NAME
+from config import Config
 
 """Creating that Database that would accept User's info.
 Such information would be used to create a users profile 
@@ -9,11 +9,7 @@ as well as log in details.
 # Function to create Schema using PostGreSQL
 def Schema():
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+    conn = psycopg2.connect(config.CONNECTION_STRING)
         # Creating cursor to perform DB Opertions
         cursor = conn.cursor()
         # SQL query to create a table
@@ -32,11 +28,7 @@ def Schema():
 # Function to create Database & Table using PostGreSQL
 def accountTable():
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         # Creating cursor to perform DB Opertions
         cursor = conn.cursor()
         # SQL query to create a table
@@ -63,11 +55,7 @@ each voters votes."""
 
 def Positions():
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         cursor = conn.cursor()
         createTable = """ CREATE TABLE ELECTION.Positions
                 (ID SERIAL PRIMARY KEY,
@@ -86,11 +74,7 @@ def Positions():
 # Function to create Database & Table using PostGreSQL
 def candidates():
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         cursor = conn.cursor()
         createTable = """CREATE TABLE ELECTION.CANDIDATES
         (ID SERIAL PRIMARY KEY, Candidates TEXT NOT NULL, 
@@ -109,11 +93,7 @@ def candidates():
 
 def resultCounts():
     try:
-        conn = psycopg2.connect(user=USERNAME,
-                                password=PASSWORD,
-                                host=DATABASE_HOST,
-                                port=DATABASE_PORT,
-                                database=DATABASE_NAME)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         cursor = conn.cursor()
         createTable = """CREATE TABLE ELECTION.RESULTS (
             Id SERIAL PRIMARY KEY,
