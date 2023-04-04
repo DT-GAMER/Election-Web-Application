@@ -124,15 +124,10 @@ def vote():
 
     return jsonify({'message': 'Vote successful'})
 
-
 @app.route('/dashboard')
 def dashboard():
     result = get_results()
     return jsonify(result)
-
-@app.route('/')
-def hello():
-    return 'Hello, World!'
 
 @app.route('/')
 def application_great():
