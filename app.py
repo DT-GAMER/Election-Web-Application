@@ -1,198 +1,130 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+from datetime import datetime
+from config import Config
+from api.register import register_user
+from api.login import login_user
+from api.vote import vote_candidate
+from api.dashboard import get_results
+import psycopg2
+import uuid
+import smtplib
+import ssl
 
 app = Flask(__name__)
+app.config.from_object(Config())
 CORS(app)
 
-
-def calculate_gpa(course_units, grades):
-
-    """
-    Calculate the GPA given the course units and grades.
-    """
-
-    if not all(0.00<=i<=5.00 for i in grades):
-        return jsonify({'error': 'Invalid grade value'})
-    total_cu = sum(course_units)
-
-    weighted_points = 0
-
-    for i in range(len(course_units)):
-
-        weighted_points += course_units[i] * grades[i]
-
-    gpa = weighted_points / total_cu
-
-    return round(gpa, 2)
-
-
-def calculate_cgpa_utme(level, sem, prev_cgpa, gpa):
-
-    cgpa = prev_cgpa #initialize cgpa to the previous cgpa
-
-    if level == 100:
-
-        if sem == 1:
-
-            cgpa = 0
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa + gpa) / 2
-
-    elif level == 200:
-
-        if sem == 1:
-
-            cgpa = (prev_cgpa * 2 + gpa) / 3
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 3 + gpa) / 4
-
-    elif level == 300:
-
-        if sem == 1:
-
-            cgpa = (prev_cgpa * 4 + gpa)/5
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 5 + gpa)/6
-
-    elif level == 400:
-
-        if  sem == 1:
-
-            cgpa = (prev_cgpa * 6 + gpa)/7
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 7 + gpa)/8
-
-    elif level == 500:
-
-        if sem == 1:
-
-            cgpa = (prev_cgpa * 8 + gpa)/9
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 9 + gpa)/10
-
-    elif level == 600:
-
-        if sem == 1:
-
-            cgpa = (prev_cgpa * 10 + gpa)/11
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 11 + gpa)/12
-
-    return round(cgpa, 2)
-
-
-def calculate_cgpa_de(level, sem, prev_cgpa, gpa):
-
-    cgpa = prev_cgpa #initialize current cgpa to previous cgpa
-
-    if level == 200:
-
-        if sem == 1:
-
-            cgpa = 0
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa + gpa) / 2
-
-    elif level == 300:
-
-        if sem == 1:
-
-            cgpa = (prev_cgpa * 2 + gpa) / 3
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 3 + gpa) / 4
-
-    elif level == 400:
-
-        if sem == 1:
-
-            cgpa = (prev_cgpa * 4 + gpa)/5
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 5 + gpa)/6
-
-    elif level == 500:
-
-        if  sem == 1:
-
-            cgpa = (prev_cgpa * 6 + gpa)/7
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 7 + gpa)/8
-
-    elif level == 600:
-
-        if sem == 1:
-
-            cgpa = (prev_cgpa * 8 + gpa)/9
-
-        elif sem == 2:
-
-            cgpa = (prev_cgpa * 9 + gpa)/10            
-
-    return round(cgpa, 2)
-
-@app.route('/generate_result', methods=['POST'])
-@cross_origin()
-def generate_result():
-
-    data = request.get_json()
-
-    admission_mode = data['admission_mode']
-
-    course_codes = data['course_codes']
-
-    course_units = data['course_units']
-
-    grades = data['grades']
-
-    level = data['level']
-
-    sem = data['sem']
-
-    prev_cgpa = data['prev_cgpa']
-
-    gpa = calculate_gpa(course_units, grades)
-
-    if admission_mode == 'UTME':
-
-        cgpa = calculate_cgpa_utme(level, sem, prev_cgpa, gpa)
-
+# Database connection
+def connect():
+    conn = psycopg2.connect(config.CONNECTION_STRING)
+    return conn
+
+# Register endpoint
+@app.route('/register', methods=['GET', 'POST'])
+@cross_origin
+def register():
+    if request.method == 'POST':
+        conn = connect()
+        cur = conn.cursor()
+        data = request.get_json()
+        email = data['email']
+        full_name = data['full_name']
+        key = str(uuid.uuid4())[:24] # Generate unique 24-char key
+        now = datetime.now()
+        create_date = now.strftime("%Y-%m-%d %H:%M:%S")
+        sql = """INSERT INTO users (email, full_name, login_key, create_date) VALUES (%s, %s, %s, %s)"""
+        cur.execute(sql, (email, full_name, key, create_date))
+        conn.commit()
+        conn.close()
+
+        # Send key to user's email
+        sender_email = "theelectoralcollege24@gmail.com"
+        sender_password = "electoralcollege2023"
+        receiver_email = email
+        message = f"""\
+        Subject: Your Election Login Key
+        
+        Your login key for the election is: {key}
+        
+        You can use this key to login at any time between 8am and 12 noon on the day of the election.
+        
+        Thank you for participating in the election."""
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, receiver_email, message)
+
+        return jsonify({'message': 'Registration successful. Login key has been sent to your email.'})
     else:
+        return jsonify({'message': 'Invalid request method.'}), 405
 
-        cgpa = calculate_cgpa_de(level, sem, prev_cgpa, gpa)
+# Login endpoint
+@app.route('/login', methods=['GET', 'POST'])
+@cross_origin
+def login():
+    if request.method == 'POST':
+        conn = connect()
+        cur = conn.cursor()
+        data = request.get_json()
+        login_key = data['login_key']
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        if current_time < "08:00:00" or current_time > "12:00:00":
+            return jsonify({'message': 'Voting is only allowed between 8am and 12 noon on the day of the election.'}), 403
+        cur.execute("SELECT * FROM users WHERE login_key=%s", (login_key,))
+        user = cur.fetchone()
+        conn.close()
+        if user:
+            return jsonify({'message': 'Login successful.'})
+        else:
+            return jsonify({'message': 'Invalid login key.'}), 401
+    else:
+        return jsonify({'message': 'Invalid request method.'}), 405
 
-    result = {
+ 
 
-        'Course Codes': course_codes,
+# Vote endpoint
+@app.route('/vote', methods=['POST'])
+@cross_origin
+def vote():
+    # get the user's vote choice from the request body
+    data = request.get_json()
+    vote_choice = data['vote_choice']
 
-        'Course Units': course_units,
+    # get the user's token from the request headers
+    token = request.headers.get('Authorization')
 
-        'Grades': grades,
+    # check if the token exists in the database
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM users WHERE login_key=%s", (token,))
+    user = cur.fetchone()
+    conn.close()
 
-        'GPA': gpa,
+    if user is None:
+        return jsonify({'message': 'Invalid token'}), 401
 
-        'CGPA': cgpa
+    # check if the user has already voted
+    if user[4] is not None:
+        return jsonify({'message': 'User has already voted'}), 400
 
-    }
+    # record the user's vote in the database
+    conn = connect()
+    cur = conn.cursor()
+    now = datetime.now()
+    vote_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    sql = """INSERT INTO votes (user_id, candidate_id, vote_time) VALUES (%s, %s, %s)"""
+    cur.execute(sql, (user[0], vote_choice, vote_time))
+    conn.commit()
+    conn.close()
 
+    return jsonify({'message': 'Vote successful'})
+
+@app.route('/dashboard')
+def dashboard():
+    result = get_results()
     return jsonify(result)
 
 @app.route('/')
