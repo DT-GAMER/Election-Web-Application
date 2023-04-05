@@ -1,11 +1,32 @@
-{
-  "name": "Election-Web-Application",
-  "version": "1.0.0",
-  "description": "Web application for conducting elections",
-  "main": "app.py",
-  "dependencies": {
-    "Flask": "*",
-    "psycopg2-binary": "*",
+
+click-didyoumean
+fastapi
+Flask
+Flask-Cors
+greenlet
+gunicorn==20.1.0
+h11
+idna
+itsdangerous
+Jinja2
+MarkupSafe
+mysqlclient
+p
+pep8
+pycodestyle
+psycopg2-binary
+pydantic
+requests
+six
+sniffio
+SQLAlchemy
+starlette
+termcolor
+typing_extensions
+urllib3
+uvicorn
+Werkzeug
+    
     
   },
   "devDependencies": {},
