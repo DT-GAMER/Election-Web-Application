@@ -1,16 +1,53 @@
+import os
 import psycopg2
 import random
 import string
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import config
 
+
+class Config:
+    class SMTP:
+        def __init__(self):
+            self.SMTP_SERVER = "smtp.gmail.com"
+            self.SMTP_PORT = 587
+    
+    def __init__(self):
+        self.DEBUG = False
+        self.TESTING = False
+        self.CSRF_ENABLED = True
+        self.CONNECTION_STRING = 'postgres://{username}:{password}@{host}:{port}/{database}'.format(
+            username=os.environ.get('DB_USERNAME'),
+            password=os.environ.get('DB_PASSWORD'),
+            host=os.environ.get('DB_HOST'),
+            port=os.environ.get('DB_PORT'),
+            database=os.environ.get('DB_NAME')
+        )
+        self.SMTP = Config.SMTP()
+
+
+class ProductionConfig(Config):
+    DEBUG = False
+
+
+class StagingConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+
+class DevelopmentConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
+
+
+class TestingConfig(Config):
+    TESTING = True
 
 
 # SMTP email server parameters
-SMTP_SERVER = Config.Smpt.SMTP_SERVER
-SMTP_PORT = Config.Smpt.SMTP_PORT
+SMTP_SERVER = config.Config.SMTP.SMTP_SERVER
+SMTP_PORT = config.Config.SMTP.SMTP_PORT
 EMAIL_ADDRESS = "theelectoralcollege24@gmail.com"
 EMAIL_PASSWORD = "electoralcollege2023"
 
@@ -42,7 +79,7 @@ def register_user(full_name, email):
 
     try:
         # Connect to the database
-        conn = psycopg2.connect(config.CONNECTION_STRING)
+        conn = psycopg2.connect(config.Config.CONNECTION_STRING)
         cur = conn.cursor()
 
         # Insert the new user into the database
