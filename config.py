@@ -1,10 +1,6 @@
 import os
 
 class Config:
-    class Smpt:
-        SMTP_SERVER = "smtp.gmail.com"
-        SMTP_PORT = 587
-    
     def __init__(self):
         self.DEBUG = False
         self.TESTING = False
@@ -16,7 +12,8 @@ class Config:
             port=os.environ.get('DB_PORT'),
             database=os.environ.get('DB_NAME')
         )
-        self.SMTP = Config.Smpt()
+        self.SMTP_SERVER = "smtp.gmail.com"
+        self.SMTP_PORT = 587
 
 class ProductionConfig(Config):
     DEBUG = False
@@ -28,6 +25,3 @@ class StagingConfig(Config):
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
-
-class TestingConfig(Config):
-    TESTING = True
