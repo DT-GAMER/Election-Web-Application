@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from datetime import datetime
 from config import Config
-from api.register import register_user
-from api.login import login_user
-from api.vote import vote_candidate
-from api.dashboard import get_results
+from register import register_user
+from login import login_user
+from vote import vote_candidate
+from dashboard import get_results
 import psycopg2
 import uuid
 import smtplib
