@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2 import Error
 import random
 import string
-from config import Config
+import config
 
 
 """This function enables user defined data to be passed into.
