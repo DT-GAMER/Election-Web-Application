@@ -1,5 +1,5 @@
 import psycopg2
-from config import Config
+import config
 
 
 def authenticate(login_key):
