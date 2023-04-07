@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from config import Config
+import config
 
 def add_candidates(Names, Position):
     try:
