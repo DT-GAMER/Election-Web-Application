@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from psycopg2 import connect
-from config import Config
+import config
 
 app = Flask(__name__)
 
