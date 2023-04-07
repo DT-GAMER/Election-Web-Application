@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from config import Config
+import config
 
 conn = psycopg2.connect(config.CONNECTION_STRING)
 print("Database connected successfully")
