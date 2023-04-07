@@ -1,38 +1,55 @@
-
-click-didyoumean
-fastapi
-Flask
-Flask-Cors
-greenlet
-gunicorn==20.1.0
-h11
-idna
-itsdangerous
-Jinja2
-MarkupSafe
-mysqlclient
-p
-pep8
-pycodestyle
-psycopg2-binary
-pydantic
-requests
-six
-sniffio
-SQLAlchemy
-starlette
-termcolor
-typing_extensions
-urllib3
-uvicorn
-Werkzeug
-    
-    
+{
+  "name": "Electio-Web-Application",
+  "version": "1.0.0",
+  "description": "A web application for conducting election",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py",
+    "build": "echo 'Account DB.py', 'add_data_to_database.py', 'auth.py', 'config', 'main.py', 'model.py', 'login.py', 'register.py', 'vote.py', 'main.py', 'auth_db.py', 'dashboard.py'"
+  },
+  "dependencies": {
+    "flask": "*",
+    "gunicorn": "*"
+    "flask_cors": "*" 
+    "anyio": "*"
+    "certifi": "*"
+    "charset-normalizer": "*"
+    "click": "*"
+    "click-didyoumean": "*"
+    "fastapi": "*"
+    "h11": "*"
+    "idna": "*" 
+    "itsdangerous": "*"
+    "Jinja2": "*" 
+    "MarkupSafe": "*" 
+    "mysqlclient": "*" 
+    "p": "*"
+    "pep8": "*"
+    "pycodestyle": "*"
+    "psycopg2-binary": "*"
+    "pydantic": "*"
+    "requests": "*"
+    "secure-smtplib": "*" 
+    "six": "*"
+    "sniffio": "*"
+    "SQLAlchemy": "*" 
+    "starlette": "*"
+    "termcolor": "*"
+    "typing_extensions": "*" 
+    "uuid": "*"
+    "urllib3": "*"
+    "uvicorn": "*"
+    "Werkzeug": "*"
   },
   "devDependencies": {},
-  "scripts": {
-    "start": "python app.py"
-  },
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "dashboard",
+    "login",
+    "register",
+    "vote",
+    "database"
+  ],
+  "author": "DT-GAMER", "Papabeer01",
+
+  "license": "MIT"
 }
