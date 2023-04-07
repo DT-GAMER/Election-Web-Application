@@ -1,6 +1,6 @@
 import psycopg2
 from datetime import datetime
-from config import Config
+import config
 
 
 def vote(candidate_id, voter_id):
