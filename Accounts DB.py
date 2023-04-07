@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2 import Error
-from config import Config
+import config
 
 """Creating that Database that would accept User's info.
 Such information would be used to create a users profile 
