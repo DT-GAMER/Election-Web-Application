@@ -12,7 +12,7 @@ import smtplib
 import ssl
 
 app = Flask(__name__)
-app.config.from_object(Config())
+app.config.from_object(config.Config())
 CORS(app)
 
 # Database connection
@@ -22,8 +22,8 @@ def connect():
 
 # Register endpoint
 @app.route('/register', methods=['GET', 'POST'])
-@cross_origin
-def register():
+@cross_origin()
+def register_user():
     if request.method == 'POST':
         conn = connect()
         cur = conn.cursor()
@@ -62,8 +62,8 @@ def register():
 
 # Login endpoint
 @app.route('/login', methods=['GET', 'POST'])
-@cross_origin
-def login():
+@cross_origin()
+def login_user():
     if request.method == 'POST':
         conn = connect()
         cur = conn.cursor()
@@ -87,8 +87,8 @@ def login():
 
 # Vote endpoint
 @app.route('/vote', methods=['POST'])
-@cross_origin
-def vote():
+@cross_origin()
+def vote_user():
     # get the user's vote choice from the request body
     data = request.get_json()
     vote_choice = data['vote_choice']
@@ -123,20 +123,13 @@ def vote():
     return jsonify({'message': 'Vote successful'})
 
 @app.route('/dashboard')
-def dashboard():
+def dashboard_result():
     result = get_results()
     return jsonify(result)
 
 @app.route('/')
 def application_great():
     return 'This application is great!'
-
-@app.route('/add_names')
-def add_names():
-    first_name = request.args.get('first_name')
-    last_name = request.args.get('last_name')
-    full_name = first_name + " " + last_name
-    return full_name
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
