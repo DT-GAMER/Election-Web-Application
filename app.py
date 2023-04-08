@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
 import config
 import register
@@ -10,6 +11,7 @@ import psycopg2
 import uuid
 import smtplib
 import ssl
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -84,32 +86,39 @@ def login_user():
     else:
         return jsonify({'message': 'Invalid request method.'}), 405
 
- 
+
 
 # Vote endpoint
 @app.route('/vote', methods=['POST'])
 @cross_origin()
+@jwt_required
 def vote_user():
     # get the user's vote choice from the request body
     data = request.get_json()
     vote_choice = data['vote_choice']
 
-    # get the user's token from the request headers
-    token = request.headers.get('Authorization')
-
-    # check if the token exists in the database
+    # validate the vote choice
     conn = connect()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM users WHERE login_key=%s", (token,))
-    user = cur.fetchone()
+    cur.execute("SELECT COUNT(*) FROM candidates WHERE id=%s", (vote_choice,))
+    candidate_exists = cur.fetchone()[0]
     conn.close()
 
-    if user is None:
-        return jsonify({'message': 'Invalid token'}), 401
+    if not candidate_exists:
+        return jsonify({'message': 'Invalid vote choice.'}), 400
+
+    # get the user's ID from the token
+    user_id = get_jwt_identity()
 
     # check if the user has already voted
-    if user[4] is not None:
-        return jsonify({'message': 'User has already voted'}), 400
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT vote_time FROM votes WHERE user_id=%s", (user_id,))
+    vote_time = cur.fetchone()
+    conn.close()
+
+    if vote_time is not None:
+        return jsonify({'message': 'User has already voted.'}), 400
 
     # record the user's vote in the database
     conn = connect()
@@ -117,16 +126,60 @@ def vote_user():
     now = datetime.now()
     vote_time = now.strftime("%Y-%m-%d %H:%M:%S")
     sql = """INSERT INTO votes (user_id, candidate_id, vote_time) VALUES (%s, %s, %s)"""
-    cur.execute(sql, (user[0], vote_choice, vote_time))
+    cur.execute(sql, (user_id, vote_choice, vote_time))
     conn.commit()
     conn.close()
 
-    return jsonify({'message': 'Vote successful'})
+    # get the current vote count for each candidate
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute("SELECT candidates.id, candidates.name, COUNT(votes.id) FROM candidates LEFT JOIN votes ON candidates.id=votes.candidate_id GROUP BY candidates.id ORDER BY COUNT(votes.id) DESC")
+    results = cur.fetchall()
+    conn.close()
+
+    # return the vote count for each candidate
+    return jsonify({'message': 'Vote successful.', 'results': results})
 
 @app.route('/dashboard')
 def dashboard_result():
-    result = get_results()
-    return jsonify(result)
+    conn = connect()
+    cur = conn.cursor()
+
+    # Get the total number of votes cast
+    cur.execute("SELECT COUNT(*) FROM votes")
+    total_votes = cur.fetchone()[0]
+
+    # Get the total number of votes for each candidate
+    cur.execute("SELECT candidate_id, COUNT(*) FROM votes GROUP BY candidate_id")
+    candidate_votes = dict(cur.fetchall())
+
+    # Get the name of each candidate
+    cur.execute("SELECT id, name FROM candidates")
+    candidates = dict(cur.fetchall())
+
+    # Format the data
+    results = []
+    for candidate_id, vote_count in candidate_votes.items():
+        candidate_name = candidates[candidate_id]
+        vote_percentage = (vote_count / total_votes) * 100
+        results.append({
+            'candidate_name': candidate_name,
+            'vote_count': vote_count,
+            'vote_percentage': vote_percentage
+        })
+
+    # Sort the results by vote count in descending order
+    results.sort(key=lambda x: x['vote_count'], reverse=True)
+
+    # Close the database connection
+    conn.close()
+
+    # Return the results as a JSON response
+    return jsonify({
+        'total_votes': total_votes,
+        'results': results
+    })
+
 
 @app.route('/')
 def application_great():
