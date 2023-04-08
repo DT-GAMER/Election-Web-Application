@@ -20,7 +20,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Database connection
 def connect():
-    conn = psycopg2.connect(config.CONNECTION_STRING)
+    conn = psycopg2.connect(config.self.CONNECTION_STRING)
     return conn
 
 # Register endpoint
