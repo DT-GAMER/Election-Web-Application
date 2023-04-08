@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from datetime import datetime
 import config
 import register
@@ -14,6 +14,7 @@ import ssl
 app = Flask(__name__)
 CORS(app)
 app.config.from_object(config.Config())
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Database connection
 def connect():
