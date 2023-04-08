@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 # Database connection
 def connect():
-    conn = psycopg2.connect(config.CONNECTION_STRING)
+    conn = psycopg2.connect(config.self.CONNECTION_STRING)
     return conn
 
 # Define a function to get the election results from the database
