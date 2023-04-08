@@ -7,7 +7,7 @@ def vote(candidate_id, voter_id):
     """Cast a vote for the specified candidate by the given voter."""
     
     # Connect to the database
-    conn = psycopg2.connect(config.self.CONNECTION_STRING)
+    conn = psycopg2.connect(config.CONNECTION_STRING)
     
     try:
         # Begin a transaction
