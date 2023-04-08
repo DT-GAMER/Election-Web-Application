@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from datetime import datetime
 import config
 import register
@@ -12,8 +12,8 @@ import smtplib
 import ssl
 
 app = Flask(__name__)
-app.config.from_object(config.Config())
 CORS(app)
+app.config.from_object(config.Config())
 
 # Database connection
 def connect():
