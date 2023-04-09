@@ -1,8 +1,8 @@
 import psycopg2
 from psycopg2 import Error
-import config
+from config import Config 
 
-conn = psycopg2.connect(config().CONNECTION_STRING)
+conn = psycopg2.connect(Config().CONNECTION_STRING)
 print("Database connected successfully")
 
 def login(key):
