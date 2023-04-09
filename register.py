@@ -8,8 +8,8 @@ from email.mime.multipart import MIMEMultipart
 from config import Config
 
 # SMTP email server parameters
-SMTP_SERVER = Config().SMTP_SERVER
-SMTP_PORT = Config().SMTP_PORT
+SMTP_SERVER = Config.SMTP_SERVER
+SMTP_PORT = Config.SMTP_PORT
 EMAIL_ADDRESS = "theelectoralcollege24@gmail.com"
 EMAIL_PASSWORD = "electoralcollege2023"
 
