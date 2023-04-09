@@ -20,6 +20,9 @@ def login(key):
         print("Error while fetching data from PostgreSQL", error)
 
     finally:
-        if conn:
-            conn.close()
-            print("Database connection closed.")
+        try:
+            if conn:
+                conn.close()
+                print("Database connection closed.")
+        except (Exception, psycopg2.Error) as error:
+            print("Error while closing database connection", error)
