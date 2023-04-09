@@ -3,11 +3,11 @@ from datetime import datetime
 import config
 
 
-def vote(candidate_id, voter_id):
+def vote(candidate_id, voter_id, sport, welfare, social, treasurer):
     """Cast a vote for the specified candidate by the given voter."""
     
     # Connect to the database
-    conn = psycopg2.connect(config().CONNECTION_STRING)
+    conn = psycopg2.connect(config.Config().CONNECTION_STRING)
     
     try:
         # Begin a transaction
@@ -35,3 +35,5 @@ def vote(candidate_id, voter_id):
     finally:
         # Close the database connection
         conn.close()
+
+
