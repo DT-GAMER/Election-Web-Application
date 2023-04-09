@@ -5,12 +5,12 @@ from config import Config
 app = Flask(__name__)
 
 # Database connection
-def connect():
-    conn = psycopg2.connect(Config().CONNECTION_STRING)
+def db_connect():
+    conn = connect(Config().CONNECTION_STRING)
     return conn
 
 # Define a function to get the election results from the database
-def get_election_results():
+def get_election_results(conn):
     with conn.cursor() as cur:
         # Get the total number of votes cast
         cur.execute("SELECT SUM(sport) AS sum_sport, SUM(welfare) AS sum_welfare, SUM(social) AS sum_social, SUM(treasurer) AS sum_treasurer FROM election.results;")
@@ -38,7 +38,7 @@ def get_election_results():
         }
 
 # Define a function to check if the election is currently open
-def is_election_open():
+def is_election_open(conn):
     with conn.cursor() as cur:
         cur.execute("SELECT value FROM settings WHERE key = 'election_open'")
         return cur.fetchone()[0] == "True"
@@ -46,11 +46,17 @@ def is_election_open():
 # Define a route to display the dashboard
 @app.route("/dashboard")
 def dashboard():
+    # Connect to the database
+    conn = db_connect()
+
     # Check if the election is currently open
-    election_open = is_election_open()
+    election_open = is_election_open(conn)
     
     # Get the election results from the database
-    election_results = get_election_results()
+    election_results = get_election_results(conn)
+    
+    # Close the database connection
+    conn.close()
     
     # Render the dashboard template with the election results and whether the election is open
     return render_template("dashboard.html", election_results=election_results, election_open=election_open)
@@ -58,10 +64,16 @@ def dashboard():
 # Define a route to close the election
 @app.route("/close_election")
 def close_election():
+    # Connect to the database
+    conn = db_connect()
+
     with conn.cursor() as cur:
         # Update the election_open setting to False
         cur.execute("UPDATE settings SET value = 'False' WHERE key = 'election_open'")
         conn.commit()
+    
+    # Close the database connection
+    conn.close()
     
     # Redirect to the dashboard
     return redirect(url_for("dashboard"))
