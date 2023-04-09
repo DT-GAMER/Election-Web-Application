@@ -38,7 +38,7 @@ def register_user(full_name, email):
 
     try:
         # Connect to the database
-        conn = psycopg2.connect(config().CONNECTION_STRING)
+        conn = psycopg2.connect(Config().CONNECTION_STRING)
         cur = conn.cursor()
 
         # Insert the new user into the database
