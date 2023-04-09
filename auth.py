@@ -1,12 +1,12 @@
 import psycopg2
-import config
+from config import Config
 
 
 def authenticate(login_key):
     """Authenticate the user with the given login key."""
     try:
         # Connect to the database
-        conn = psycopg2.connect(config.self.CONNECTION_STRING)
+        conn = psycopg2.connect(Config().CONNECTION_STRING)
         cur = conn.cursor()
 
         # Check if the login key is valid
