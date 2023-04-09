@@ -8,8 +8,8 @@ from email.mime.multipart import MIMEMultipart
 from config import Config
 
 # SMTP email server parameters
-SMTP_SERVER = Config.SMTP_SERVER
-SMTP_PORT = Config.SMTP_PORT
+SMTP_SERVER = Config().SMTP_SERVER
+SMTP_PORT = Config().SMTP_PORT
 EMAIL_ADDRESS = "theelectoralcollege24@gmail.com"
 EMAIL_PASSWORD = "electoralcollege2023"
 
@@ -38,7 +38,7 @@ def register_user(full_name, email):
 
     try:
         # Connect to the database
-        conn = psycopg2.connect(config.self.CONNECTION_STRING)
+        conn = psycopg2.connect(config.CONNECTION_STRING)
         cur = conn.cursor()
 
         # Insert the new user into the database
