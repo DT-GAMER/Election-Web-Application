@@ -1,13 +1,13 @@
 import psycopg2
 from datetime import datetime
-import config
+from config import Config
 
 
 def vote(candidate_id, voter_id, sport, welfare, social, treasurer):
     """Cast a vote for the specified candidate by the given voter."""
     
     # Connect to the database
-    conn = psycopg2.connect(config.Config().CONNECTION_STRING)
+    conn = psycopg2.connect(Config().CONNECTION_STRING)
     
     try:
         # Begin a transaction
@@ -28,9 +28,10 @@ def vote(candidate_id, voter_id, sport, welfare, social, treasurer):
             conn.commit()
     
     except Exception as e:
-        # Rollback the transaction if there was an error
-        conn.rollback()
-        raise e
+    # Rollback the transaction if there was an error
+    conn.rollback()
+    raise Exception("Error casting vote: " + str(e))
+
     
     finally:
         # Close the database connection
