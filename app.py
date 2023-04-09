@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from datetime import datetime
-import config
+from config import Config
 import register
 import login
 import vote
@@ -20,7 +20,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # Database connection
 def connect():
-    conn = psycopg2.connect(config().CONNECTION_STRING)
+    conn = psycopg2.connect(Config().CONNECTION_STRING)
     return conn
 
 # Register endpoint
