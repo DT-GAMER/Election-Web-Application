@@ -151,34 +151,27 @@ def dashboard_result():
 
     # Get the total number of votes for each candidate
     cur.execute("SELECT candidate_id, COUNT(*) FROM votes GROUP BY candidate_id")
-    candidate_votes = dict(cur.fetchall())
+    candidate_votes = cur.fetchall()
 
-    # Get the name of each candidate
+    # Get the names of all candidates
     cur.execute("SELECT id, name FROM candidates")
-    candidates = dict(cur.fetchall())
+    candidates = cur.fetchall()
 
-    # Format the data
+    # Combine the vote count and candidate name for each candidate
     results = []
-    for candidate_id, vote_count in candidate_votes.items():
-        candidate_name = candidates[candidate_id]
-        vote_percentage = (vote_count / total_votes) * 100
-        results.append({
-            'candidate_name': candidate_name,
-            'vote_count': vote_count,
-            'vote_percentage': vote_percentage
-        })
+    for candidate in candidates:
+        candidate_id = candidate[0]
+        candidate_name = candidate[1]
+        votes = 0
+        for candidate_vote in candidate_votes:
+            if candidate_vote[0] == candidate_id:
+                votes = candidate_vote[1]
+                break
+        results.append({'id': candidate_id, 'name': candidate_name, 'votes': votes})
 
-    # Sort the results by vote count in descending order
-    results.sort(key=lambda x: x['vote_count'], reverse=True)
+    # Return the results
+    return jsonify({'total_votes': total_votes, 'results': results})
 
-    # Close the database connection
-    conn.close()
-
-    # Return the results as a JSON response
-    return jsonify({
-        'total_votes': total_votes,
-        'results': results
-    })
 
 
 @app.route('/')
